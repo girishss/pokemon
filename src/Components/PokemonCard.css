@@ -1,0 +1,15 @@
+.PokemonCard-Container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 50px;
+    background-color: aquamarine;
+}
+.PokemonCard-Image{
+    width: 200px;
+    height: 200px;
+}

@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import PokemonCard from "./Components/PokemonCard";
+import "./App.css";
 
 function App() {
+  const [pokemonData, setPokemonData] = useState([]);
+
+  const [count, setCount] = useState(1);
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${count}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPokemonData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching Pokemon:", error);
+      });
+  }, [count]);
+
+  const handleFetchNext = () => {
+    setCount(count + 1);
+  };
+
+  const handleFetchPrevious = () => {
+    setCount(count - 1);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PokemonCard
+        img={pokemonData.sprites?.front_default}
+        label={pokemonData.name}
+      />
+      <div className="buttons-Container">
+        {count > 1 ? (
+          <button className="button-right" onClick={handleFetchPrevious}>
+            Fetch prev
+          </button>
+        ) : (
+          <p></p>
+        )}
+        <button className="button" onClick={handleFetchNext}>
+          Fetch Next
+        </button>
+      </div>
     </div>
   );
 }
